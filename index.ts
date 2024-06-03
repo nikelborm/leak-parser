@@ -31,14 +31,14 @@ for (const i of data.matchAll(testRegexp)) {
     throw new Error(`
       Found inconsistent divider.
       Usual divider is '${[...dividers.values()].filter( e => e !== i.groups.divider)[0]}'.
-      New unusual divider is '${i.groups.divider}' on line '${i[0]}'}
+      New unusual divider is '${i.groups.divider}' on line '${i[0]}'
     `);
 
   sqlRows.push([i.groups.email, i.groups.password])
 }
 
 if (badLines.size)
-  throw new Error(`Don't know what to do with ${badLines}}`)
+  throw new Error(`Don't know what to do with following:\n${[...badLines.values()].join('\n')}`)
 
 
 await client.query(format(
