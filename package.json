@@ -1,0 +1,22 @@
+{
+  "name": "denis-help",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.14.0",
+    "@types/pg": "^8.11.6",
+    "@types/pg-format": "^1.0.5",
+    "@types/sqlstring": "^2.3.2",
+    "pg": "^8.11.5",
+    "pg-format": "^1.0.4",
+    "typescript": "^5.4.5"
+  }
+}
