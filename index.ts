@@ -38,7 +38,6 @@ for (const i of data.matchAll(testRegexp)) {
 if (badLines.size)
   throw new Error(`Don't know what to do with following:\n${[...badLines.values()].join('\n')}`)
 
-
 await client.query(format(
   `INSERT INTO tuples(email, password) VALUES %L ON CONFLICT
   (email, password) DO UPDATE SET frequency = tuples.frequency + 1;`,
