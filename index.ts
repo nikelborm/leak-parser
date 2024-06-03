@@ -20,10 +20,20 @@ const data = (
 
 
 const badLines = new Set(data.split('\n'));
+const dividers = new Set<string>()
 const sqlRows = [];
 
 for (const i of data.matchAll(testRegexp)) {
   badLines.delete(i[0]);
+
+  dividers.add(i.groups.divider);
+  if (dividers.size > 1)
+    throw new Error(`
+      Found inconsistent divider.
+      Usual divider is '${[...dividers.values()].filter( e => e !== i.groups.divider)[0]}'.
+      New unusual divider is '${i.groups.divider}' on line '${i[0]}'}
+    `);
+
   sqlRows.push([i.groups.email, i.groups.password])
 }
 
