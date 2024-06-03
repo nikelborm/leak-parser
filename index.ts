@@ -2,9 +2,7 @@ import { readFile } from 'node:fs/promises';
 import pg from 'pg';
 import format from 'pg-format';
 
-const { Client } = pg;
-
-const client = new Client({
+const client = new pg.Client({
   password: process.env.PG_PASS,
   user: 'postgres',
   host: 'localhost'
@@ -16,7 +14,7 @@ const testRegexp = /^(?<email>[^\@]*\@([a-zA-Z\d\-]+\.)+[a-zA-Z]*)(?<divider>[^a
 
 const data = (
   await readFile(process.env.INPUT_FILE_NAME, { encoding: 'utf8' })
-).replaceAll('\r\n', '\n');
+).replaceAll('\r', '');
 
 
 const badLines = new Set(data.split('\n'));
@@ -31,7 +29,7 @@ for (const i of data.matchAll(testRegexp)) {
     throw new Error(`
       Found inconsistent divider.
       Usual divider is '${[...dividers.values()].filter( e => e !== i.groups.divider)[0]}'.
-      New unusual divider is '${i.groups.divider}' on line '${i[0]}'
+      New unusual divider is '${i.groups.divider}' on ${[...data.slice(0, i.index)].filter(e => e === '\n').length + 1} line ('${i[0]}')
     `);
 
   sqlRows.push([i.groups.email, i.groups.password])
