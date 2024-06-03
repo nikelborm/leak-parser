@@ -37,7 +37,9 @@ for (const i of data.matchAll(testRegexp)) {
   sqlRows.push([i.groups.email, i.groups.password])
 }
 
-console.log('badLines: ', badLines);
+if (badLines.size)
+  throw new Error(`Don't know what to do with ${badLines}}`)
+
 
 await client.query(format(
   `INSERT INTO tuples(email, password) VALUES %L ON CONFLICT
